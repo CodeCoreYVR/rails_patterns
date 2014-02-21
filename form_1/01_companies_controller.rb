@@ -1,4 +1,4 @@
-class CompaniesController < AppliationController
+class CompaniesController < ApplicationController
 
   def new
     @company = Company.new
@@ -31,6 +31,6 @@ class CompaniesController < AppliationController
   end
 
   def user_params
-    params.require(:user).permit([:name, :email])
+    params.require(:company).require('user').permit([:name, :email])
   end
 end

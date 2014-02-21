@@ -14,6 +14,11 @@ class User < ActiveRecord::Base
     UserMailer.welcome_email(self).deliver if confirmed?
   end
 
+  def mark_as_pending
+    self.pending = true
+    save
+  end
+
   def confirmed?
     # check flag
   end

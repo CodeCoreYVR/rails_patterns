@@ -4,9 +4,6 @@ class CompanyForm
   include ActiveModel::Conversion, ActiveModel::Validations
   include Virtus.model
 
-  attr_reader :company
-  attr_reader :user
-
   attribute :name, String
   attribute :email, String
   attribute :company_name, String
@@ -14,10 +11,25 @@ class CompanyForm
   attribute :market, String
   attribute :tagline, String
 
+  attribute :company, Company
+  attribute :user, User
+
   validates_presence_of :name, :email, :company_name
   validate :email_is_valid
   # more
 
+  def company=(company)
+    self.company_name = company.name
+  end
+
+  def user=(user)
+    self.name = user.name
+    self.email = user.email
+    self.market = user.market
+    self.tagline = user.tagline
+  end
+
+  # necessary for ActiveModel
   def persisted?
     false
   end
@@ -31,6 +43,13 @@ class CompanyForm
 
 
   private
+
+  def user
+    User.new(
+      name: name,
+      email: email
+    )
+  end
 
   def persist!
     Company.transaction do

@@ -1,0 +1,32 @@
+= simple_form @company_form, url: companies_url do |form|
+  = form.input :name # params[:company_form][:name]
+  = form.input :company_name # params[:company_form][:company_name]
+  = form.input :email
+
+params = {
+  company_form: {
+    name: 'user name'
+    company_name: 'name',
+    email: 'email'
+  }
+}
+
+#old_form
+  = simple_form @company do |form|
+    = form.input :name # -> <input name='company[name]'>
+    = form.simple_fields_for @user do |user_form|
+      = user_form.input :name # -> <input name='company[user][name]'>
+      = user_form.input :email # -> <input name='company[user][email]'>
+
+
+params = {
+  company: {
+    name: 'name'
+    user: {
+      name: 'user name',
+      email: 'email'
+    }
+  }
+
+
+

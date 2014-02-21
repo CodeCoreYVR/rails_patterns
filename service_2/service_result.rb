@@ -24,8 +24,6 @@ class ServiceResult
       self.errors.messages.merge!(obj.errors) unless obj.errors.empty?
     end
   end
-:wa
-
 
   def add_errors_or_successful!(obj_with_errors)
     add_errors(obj_with_errors)

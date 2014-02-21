@@ -15,6 +15,13 @@ class CompaniesController < AppliationController
     end
   end
 
+  def edit
+    @company_form = CompanyForm.new(
+      company: current_user.company,
+      user: current_user
+    )
+  end
+
 
   def company_params
     params.
