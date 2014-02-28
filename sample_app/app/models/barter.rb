@@ -10,7 +10,7 @@ class Barter < ActiveRecord::Base
   end
 
   def notify_response
-    UserMailer.barter_response(self, self.barter) if barter_id.present?
+    UserMailer.barter_response(self, self.barter).deliver if barter_id.present?
   end
 
 end

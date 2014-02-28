@@ -1,0 +1,10 @@
+h1 Barter Listing
+
+ul
+  - @barters.each do |barter|
+    li
+      = barter.title
+      = link_to "Remove", barter_url(barter), method: :delete
+      = link_to "Respond", new_barter_url(barter_id: barter.id)
+
+= link_to "Propose a new barter", new_barter_url

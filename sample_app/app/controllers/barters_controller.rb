@@ -5,7 +5,7 @@ class BartersController < ApplicationController
   end
 
   def new
-    @barter = Barter.new
+    @barter = Barter.new(params.permit(:barter_id))
   end
 
   def create
@@ -16,6 +16,12 @@ class BartersController < ApplicationController
     else
       render :new
     end
+  end
+
+  def destroy
+    @barter = Barter.find(params[:id])
+    @barter.destroy
+    redirect_to barters_url, notice: 'Removed barter'
   end
 
   protected

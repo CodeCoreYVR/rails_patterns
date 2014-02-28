@@ -1,1 +1,21 @@
-h1 Propose a new Barter
+- if @barter.barter_id.present?
+  h1 Respond to a barter
+  p You are responding to the barter titled: #{@barter.barter.title}
+- else
+  h1 Propose a new Barter
+
+= simple_form_for @barter do |form|
+  = form.input :barter_id, as: :hidden
+  = form.input :title
+  = form.input :offerring
+  = form.input :accepting
+  = form.input :name
+  = form.input :email
+
+  - if @barter.barter_id.present?
+    = form.submit 'Send Response'
+  - else
+    = form.submit 'Propose Barter'
+
+= link_to "Back to listing", barters_url
+
