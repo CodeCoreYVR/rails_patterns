@@ -9,9 +9,8 @@ class BartersController < ApplicationController
   end
 
   def create
-    @barter = Barter.new(barter_params)
-
-    if @barter.save
+    @barter = CreateBarter.call(barter_params)
+    if @barter.persisted?
       redirect_to barters_url
     else
       render :new
