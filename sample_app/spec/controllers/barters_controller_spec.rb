@@ -21,6 +21,25 @@ describe BartersController do
       end
     end
 
+    context "creating a response barter" do
+      let!(:original_barter) { create(:barter) }
+      let(:create_params) {
+        { barter: attributes_for(:barter).merge(barter_id: original_barter.id) }
+      }
+      it "notifies the submitter that the barter was posted" do
+        original_barter # ensure it's created before the expectation
+        expect(UserMailer).to receive(:barter_posted).and_return(double('mailer').as_null_object)
+        perform_post
+      end
+
+      it "notifies the original submitter that there is a response" do
+        expect(UserMailer).to receive(:barter_response).and_return(double('mailer').as_null_object)
+        perform_post
+
+      end
+
+    end
+
   end
 
 end
