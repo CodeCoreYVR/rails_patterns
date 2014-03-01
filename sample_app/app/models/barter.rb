@@ -4,10 +4,8 @@ class Barter < ActiveRecord::Base
 
   validates :email, presence: true
 
-  after_create :notify_response
-
-  def notify_response
-    UserMailer.barter_response(self, self.barter) if barter_id.present?
+  def is_a_response?
+    barter_id.present?
   end
 
 end

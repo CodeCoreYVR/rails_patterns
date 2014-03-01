@@ -9,7 +9,12 @@ class BartersController < ApplicationController
   end
 
   def create
-    @barter = CreateBarter.call(barter_params)
+    @barter = if is_a_response?
+                CreateResponse.call(original_barter, barter_params)
+              else
+                CreateBarter.call(barter_params)
+              end
+
     if @barter.persisted?
       redirect_to barters_url
     else
@@ -19,7 +24,15 @@ class BartersController < ApplicationController
 
   protected
 
+  def is_a_response?
+    params[:barter].has_key?(:barter_id)
+  end
+
   def barter_params
-    params.require(:barter).permit(:title, :barter_id, :accepting, :offerring, :name, :email)
+    params.require(:barter).permit(:title, :accepting, :offerring, :name, :email)
+  end
+
+  def original_barter
+    Barter.find(params[:barter][:barter_id])
   end
 end
